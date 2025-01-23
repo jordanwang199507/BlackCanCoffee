@@ -3,19 +3,55 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: radial-gradient(
+    circle at -20% 0%,
+    #444444,
+    #3b3b3b,
+    #333333,
+    #2b2b2b,
+    #232323,
+    #1b1b1b,
+    #131313,
+    #080808
+  );
+  --dark: #222222;
+  --dark-secondary: #ffffff33;
+  --primary-400: #b4a093;
+  --primary-300: #b4a093c9;
+  --primary-200: #b4a09395;
+  --primary-100: #b4a09344;
+  --secondary: #ffebaf;
+  --white-100: #ffffff95;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
+  color: var(--primary-400);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.boundry {
+  @apply max-w-[1440px] m-auto px-10 max-sm:px-6 max-[450px]:px-4;
+}
+
+.active {
+  @apply bg-primary400 text-dark font-outfitLight !important;
+}
+
+.btn {
+  @apply p-3 flex items-center justify-center bg-darkSecondary rounded-lg gap-2 hover:bg-primary200 max-[450px]:p-2 max-[450px]:text-sm;
+}
+.btn-secondary {
+  @apply p-2 flex items-center justify-center border-2 border-primary400 rounded-xl gap-2 hover:bg-primary100;
+}
+.btn-tertiary {
+  @apply p-3 px-5 max-sm:p-2 max-sm:px-3 flex items-center justify-center transition-all duration-100 bg-white text-primary400 gap-4 rounded-lg hover:bg-[#ffffff40] hover:text-secondary;
 }
