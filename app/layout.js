@@ -45,11 +45,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit100.variable} ${outfit200.variable} ${outfit300.variable} ${outfit400.variable} ${outfit500.variable} ${outfit600.variable} ${outfit700.variable} ${outfit800.variable} ${outfit900.variable}`}
       >
-        <header className="w-full z-10 relative">
+        <header className="w-full z-20 relative">
           <Nav />
         </header>
         {children}
-        <footer className="w-full z-10 relative">
+        <footer className="w-full z-20 relative">
           <Footer />
         </footer>
       </body>

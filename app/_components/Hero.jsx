@@ -1,16 +1,48 @@
-import React from "react";
+"use client";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(ScrollTrigger);
+const Hero = ({ imageRef }) => {
+  const containerRef = useRef(null);
 
-const Hero = () => {
+  useEffect(() => {
+    const container = containerRef.current;
+    const image = imageRef.current;
+
+    if (container && image) {
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "2% 1%",
+          end: "bottom 80%",
+          scrub: true,
+          markers: true,
+          pin: true,
+          anticipatePin: 1,
+          //   onLeave: () => ScrollTrigger.refresh(),
+        },
+      });
+
+      tl.fromTo(
+        image,
+        { y: "15vh" },
+        { y: "90vh", rotate: 0, scale: 1.5, ease: "power2.out", duration: 3 }
+      ).to("#title", { scale: 1.2, duration: 3 }, 0);
+    }
+  }, []);
+
   return (
-    <section className="min-h-screen h-auto flex flex-col pt-32 justify-center -mt-24 max-sm:-mt-16">
-      <img
-        src={"/images/bottle-image.png"}
-        alt="Moving bottle"
-        className="absolute left-1/2 -translate-x-1/2 top-[10%] -translate-y-1/2 rotate-[20deg] max-md:scale-90 max-sm:scale-75 max-[450px]:scale-[65%] max-lg:top-[8%]"
-      />
+    <section
+      ref={containerRef}
+      className="min-h-screen h-auto flex flex-col pt-32 justify-center"
+    >
       <div className="h-full w-full my-36">
         <div className="w-full text-center py-10 ">
-          <h1 className="uppercase font-outfitExtraBold word-spacing-wider text-[92px] max-md:text-[84px] max-sm:text-[58px] max-[450px]:text-[48px] text-primary400 tracking-wider">
+          <h1
+            id="title"
+            className="inline-block uppercase font-outfitExtraBold word-spacing-wider text-[84px] max-md:text-[72px] max-sm:text-[58px] max-[450px]:text-[48px] text-primary400 tracking-wider"
+          >
             Black Can
           </h1>
         </div>

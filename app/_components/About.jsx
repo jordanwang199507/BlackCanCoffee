@@ -1,8 +1,38 @@
-import React from "react";
+"use client";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(ScrollTrigger);
 
-const About = () => {
+const About = ({ imageRef }) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const image = imageRef.current;
+
+    if (container && image) {
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top 80%",
+          end: "50% 50%",
+          markers: true,
+          scrub: true,
+          //   pin: true,
+          anticipatePin: 1,
+        },
+      });
+      tl.to(
+        image,
+        // { y: "80vh", rotate: 0, scale: 2 },
+        { y: "125vh", rotate: 0, scale: 1, duration: 2, ease: "power2.out" }
+      );
+    }
+  });
+
   return (
-    <section className="min-h-fit">
+    <section ref={containerRef} className="min-h-fit">
       <div className="flex justify-between max-[1180px]:flex-col max-[1180px]:gap-24 max-sm:gap-96 max-sm:items-center">
         <div className="max-w-[20rem] max-[1180px]:max-w-sm max-md:max-w-[20rem] flex flex-col gap-12 shrink-0">
           <div className="h-80 max-md:h-64 max-sm:h-44 flex gap-6">

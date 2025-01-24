@@ -5,8 +5,8 @@ import ShoppingCart from "@/public/icons/ShoppingCart";
 
 const Nav = () => {
   return (
-    <div className="boundry h-24 max-sm:h-16 flex items-center ">
-      <nav className="h-auto flex justify-between w-full">
+    <div className="boundry h-24 max-sm:h-16 flex items-center fixed top-2 w-full left-1/2 -translate-x-1/2">
+      <nav className="h-auto flex justify-between w-full ">
         <Image
           src={"/icons/logo.svg"}
           id="logo"

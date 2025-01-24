@@ -1,11 +1,34 @@
+"use client";
 import Heart from "@/public/icons/Heart";
 import ShoppingCart from "@/public/icons/ShoppingCart";
-import React from "react";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
-const Shop = () => {
+gsap.registerPlugin(ScrollTrigger);
+
+const Shop = ({ imageRef }) => {
+  const containerRef = useRef(null);
+  useEffect(() => {
+    const container = containerRef.current;
+    const image = imageRef.current;
+
+    if (container && image) {
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "-50% 90%",
+          end: "50% 65%",
+          scrub: true,
+          markers: true,
+        },
+      });
+    }
+  });
+
   return (
-    <section className="py-10">
+    <section className="py-10" ref={containerRef}>
       <div className="flex justify-between gap-10 max-[1080px]:justify-end max-[1080px]:gap-0">
         {/* <div className="w-full flex-grow "> */}
         <Image
