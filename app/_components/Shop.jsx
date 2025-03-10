@@ -15,15 +15,91 @@ const Shop = ({ imageRef }) => {
     const image = imageRef.current;
 
     if (container && image) {
-      let tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          start: "-50% 90%",
-          end: "50% 65%",
-          scrub: true,
-          markers: true,
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isDesktop: "(min-width: 1280px)",
+          isTablet: "(min-width: 1180px) and (max-width: 1279px)",
+          isMobile: "(min-width: 1081px) and (max-width: 1179px)",
+          isSmallMobile: "(min-width: 1025px) and (max-width: 1080px)",
+          isSmallSmall: "(min-width: 768px) and (max-width: 1024px)",
+          isPhone: "(min-width: 381px) and (max-width: 767px)",
+          isExtraSmall: "(max-width: 380px)",
         },
-      });
+        (context) => {
+          let {
+            isDesktop,
+            isTablet,
+            isMobile,
+            isSmallMobile,
+            isSmallSmall,
+            isPhone,
+          } = context.conditions;
+          let tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: "-50% 90%",
+              end: "50% 65%",
+              scrub: true,
+              markers: true,
+              anticipatePin: 1,
+              toggleActions: "play none reverse none",
+            },
+          });
+          tl.to(image, {
+            y: isDesktop
+              ? "230vh"
+              : isTablet
+              ? "290vh"
+              : isMobile
+              ? "365vh"
+              : isSmallMobile
+              ? "364vh"
+              : isSmallSmall
+              ? "370vh"
+              : isPhone
+              ? "376vh"
+              : "386vh",
+            x: isDesktop
+              ? "-33vmin"
+              : isTablet
+              ? "-39vmin"
+              : isMobile
+              ? "-34vmin"
+              : isSmallMobile
+              ? "-50vw"
+              : isSmallSmall
+              ? "-50vw"
+              : isPhone
+              ? "-50vw"
+              : "-70vw",
+            scale: 0.52,
+            rotate: 88,
+            duration: 2,
+            ease: "power2.inOut",
+          });
+        }
+      );
+      //   let tl = gsap.timeline({
+      //     scrollTrigger: {
+      //       trigger: container,
+      //       start: "-50% 90%",
+      //       end: "50% 65%",
+      //       scrub: true,
+      //       markers: true,
+      //       anticipatePin: 1,
+      //       toggleActions: "play none reverse none",
+      //     },
+      //   });
+      //   tl.to(image, {
+      //     y: "208vh",
+      //     x: "-33vmin",
+      //     scale: 0.52,
+      //     rotate: 88,
+      //     duration: 2,
+      //     ease: "power2.inOut",
+      //   });
     }
   });
 

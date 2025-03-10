@@ -39,7 +39,7 @@ body {
 }
 
 .boundry {
-  @apply max-w-[1440px] m-auto px-10 max-sm:px-6 max-[450px]:px-4;
+  @apply max-w-[1440px] m-auto px-10 max-sm:px-6 max-[450px]:px-4 max-sm:overflow-hidden;
 }
 
 .active {

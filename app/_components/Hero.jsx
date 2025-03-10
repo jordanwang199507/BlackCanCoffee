@@ -11,42 +11,80 @@ const Hero = ({ imageRef }) => {
     const image = imageRef.current;
 
     if (container && image) {
-      let tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          start: "2% 1%",
-          end: "bottom 80%",
-          scrub: true,
-          markers: true,
-          pin: true,
-          anticipatePin: 1,
-          //   onLeave: () => ScrollTrigger.refresh(),
-        },
-      });
+      const mm = gsap.matchMedia();
 
-      tl.fromTo(
-        image,
-        { y: "15vh" },
-        { y: "90vh", rotate: 0, scale: 1.5, ease: "power2.out", duration: 3 }
-      ).to("#title", { scale: 1.2, duration: 3 }, 0);
+      //finish laptop gsap first
+      //after check for larger screen
+      //after check each media size
+      mm.add(
+        {
+          isDesktop: "(min-width: 1024px)",
+          isTablet: "(min-width: 768px) and (max-width: 1023px)",
+          isMobile: "(max-width: 767px)",
+        },
+        (context) => {
+          let { isDesktop, isTablet, isMobile } = context.conditions;
+          const startY =
+            window.innerHeight * (isDesktop ? 0.15 : isTablet ? 0.12 : 0);
+          const endY =
+            window.innerHeight * (isDesktop ? 0.85 : isTablet ? 0.8 : 0.65);
+          let tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: "2% 1%",
+              end: isDesktop
+                ? "bottom 80%"
+                : isTablet
+                ? "bottom 90%"
+                : "100% 90%",
+              scrub: true,
+              //   markers: true,
+              pin: true,
+              anticipatePin: 1,
+              toggleActions: "play none reverse none",
+            },
+          });
+
+          tl.fromTo(
+            image,
+            {
+              y: startY,
+              scale: isDesktop ? 1 : isTablet ? 0.9 : 0.65,
+              zIndex: 1,
+            },
+            {
+              y: endY,
+              x: isMobile ? "-35vmin" : "",
+              rotate: 0,
+              scale: isDesktop ? 1.5 : isTablet ? 1.2 : 1.2,
+              ease: "power2.out",
+              duration: 3,
+              zIndex: 0,
+            }
+          ).to("#title", { scale: 1.2, duration: 3 }, 0);
+          return () => {
+            tl.kill();
+          };
+        }
+      );
     }
   }, []);
 
   return (
     <section
       ref={containerRef}
-      className="min-h-screen h-auto flex flex-col pt-32 justify-center"
+      className="min-h-auto h-screen flex flex-col pt-32 justify-center"
     >
-      <div className="h-full w-full my-36">
-        <div className="w-full text-center py-10 ">
+      <div className="h-full w-full my-36 flex flex-col justify-center">
+        <div className="w-full text-center py-10 z-0 ">
           <h1
             id="title"
-            className="inline-block uppercase font-outfitExtraBold word-spacing-wider text-[84px] max-md:text-[72px] max-sm:text-[58px] max-[450px]:text-[48px] text-primary400 tracking-wider"
+            className="inline-block uppercase font-outfitExtraBold word-spacing-wider text-[84px] max-md:text-[72px] max-sm:text-[58px] max-[450px]:text-[48px] max-[450px]:my-20 text-primary400 tracking-wider"
           >
             Black Can
           </h1>
         </div>
-        <div className="flex justify-between items-start py-20 mt-40 max-md:flex-col max-md:items-center max-md:gap-10">
+        <div className="flex justify-between items-start py-20  max-md:mt-20 max-md:flex-col max-md:items-center max-md:gap-10 z-10">
           <div className="max-w-[340px] text-lg font-outfitRegular text-pretty max-md:max-w-md max-[450px]:max-w-xs max-md:text-pretty max-md:text-center max-[450px]:text-base">
             <p>
               Life’s too short for average coffee. Discover the perfect balance

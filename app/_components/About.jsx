@@ -12,29 +12,67 @@ const About = ({ imageRef }) => {
     const image = imageRef.current;
 
     if (container && image) {
-      let tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          start: "top 80%",
-          end: "50% 50%",
-          markers: true,
-          scrub: true,
-          //   pin: true,
-          anticipatePin: 1,
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isDesktop: "(min-width: 1181px)",
+          isTablet: "(min-width: 640px) and (max-width: 1180px)",
+          isMobile: "(max-width: 639px)",
         },
-      });
-      tl.to(
-        image,
-        // { y: "80vh", rotate: 0, scale: 2 },
-        { y: "125vh", rotate: 0, scale: 1, duration: 2, ease: "power2.out" }
+        (context) => {
+          let { isDesktop, isTablet, isMobile } = context.conditions;
+          let tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: "top 80%",
+              end: "40% 55%",
+              //   markers: true,
+              scrub: true,
+              //   pin: true,
+              anticipatePin: 1,
+              toggleActions: "play none reverse none",
+            },
+          });
+
+          tl.to(image, {
+            y: isDesktop ? "145vh" : isTablet ? "180vh" : "170vh",
+            x: isDesktop ? "" : isTablet ? "30vmin" : "0vmin",
+            scale: isDesktop ? 1 : isTablet ? 1.2 : 0.6,
+            ease: "power2.out",
+            duration: 3,
+          });
+          return () => {
+            // ✅ Cleanup function when media query changes
+            tl.kill();
+          };
+        }
       );
+
+      //   let tl = gsap.timeline({
+      //     scrollTrigger: {
+      //       trigger: container,
+      //       start: "top 80%",
+      //       end: "50% 50%",
+      //       //   markers: true,
+      //       scrub: true,
+      //       //   pin: true,
+      //       anticipatePin: 1,
+      //       toggleActions: "play none reverse none",
+      //     },
+      //   });
+      //   tl.to(
+      //     image,
+      //     // { y: "80vh", rotate: 0, scale: 2 },
+      //     { y: "125vh", rotate: 0, scale: 1, duration: 2, ease: "power2.out" }
+      //   );
     }
   });
 
   return (
-    <section ref={containerRef} className="min-h-fit">
+    <section ref={containerRef} className="min-h-fit mt-60">
       <div className="flex justify-between max-[1180px]:flex-col max-[1180px]:gap-24 max-sm:gap-96 max-sm:items-center">
-        <div className="max-w-[20rem] max-[1180px]:max-w-sm max-md:max-w-[20rem] flex flex-col gap-12 shrink-0">
+        <div className="max-w-[20rem] max-[1180px]:max-w-sm max-md:max-w-[20rem] flex flex-col gap-12 shrink-0 z-10">
           <div className="h-80 max-md:h-64 max-sm:h-44 flex gap-6">
             <div className="w-1/2 h-full rounded-lg bg-assetImage01 bg-cover bg-center" />
             <div className=" w-1/2 h-full rounded-lg bg-assetImage02 bg-cover bg-center" />
@@ -49,7 +87,7 @@ const About = ({ imageRef }) => {
             </p>
           </div>
         </div>
-        <div className="max-w-[26rem] max-md:max-w-[20rem] shrink-0 flex flex-col gap-4">
+        <div className="max-w-[24rem] max-md:max-w-[20rem] shrink-0 flex flex-col gap-4 z-10">
           <p className="text-lg max-sm:text-base font-outfitRegular leading-relaxed text-primary300 text-pretty">
             Our iconic black cans are more than just packaging—they’re a
             statement of sophistication and simplicity.

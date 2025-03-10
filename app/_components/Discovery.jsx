@@ -1,10 +1,106 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import ShoppingCart from "@/public/icons/ShoppingCart";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
-const Discovery = () => {
+gsap.registerPlugin(ScrollTrigger);
+const Discovery = ({ imageRef }) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const image = imageRef.current;
+
+    if (container && image) {
+      const mm = gsap.matchMedia();
+      mm.add(
+        {
+          isDesktop: "(min-width: 1280px)",
+          isTablet: "(min-width: 1180px) and (max-width: 1279px)",
+          isMobile: "(min-width: 1081px) and (max-width: 1179px)",
+          isSmallMobile: "(min-width: 1025px) and (max-width: 1080px)",
+          isSmallSmall: "(min-width: 768px) and (max-width: 1024px)",
+          isPhone: "(min-width: 381px) and (max-width: 767px)",
+          isExtraSmall: "(max-width: 380px)",
+        },
+        (context) => {
+          let {
+            isDesktop,
+            isTablet,
+            isMobile,
+            isSmallMobile,
+            isSmallSmall,
+            isPhone,
+          } = context.conditions;
+          let tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: "-10% 90%",
+              end: "50% 65%",
+              markers: true,
+              scrub: true,
+              anticipatePin: 1,
+              toggleActions: "play none reverse none",
+            },
+          });
+          tl.to(image, {
+            y: isDesktop
+              ? "316vh"
+              : isTablet
+              ? "424vh"
+              : isMobile
+              ? "500vh"
+              : isSmallMobile
+              ? "500vh"
+              : isSmallSmall
+              ? "510vh"
+              : isPhone
+              ? "547vh"
+              : "582vh",
+            x: isDesktop
+              ? "32vmin"
+              : isTablet
+              ? "25vw"
+              : isMobile
+              ? "23vw"
+              : isSmallMobile
+              ? "21vw"
+              : isSmallSmall
+              ? "21vw"
+              : "5vw",
+            rotate: 15,
+            duration: 2,
+            ease: "power2.inOut",
+            zIndex: 2,
+          });
+        }
+      );
+      //   let tl = gsap.timeline({
+      //     scrollTrigger: {
+      //       trigger: container,
+      //       start: "-10% 90%",
+      //       end: "50% 65%",
+      //       //   markers: true,
+      //       scrub: true,
+      //       anticipatePin: 1,
+      //       toggleActions: "play none reverse none",
+      //     },
+      //   });
+      //   tl.to(image, {
+      //     // y: "295vh",
+      //     // x: "30vmin",
+      //     // rotate: 0,
+      //     duration: 2,
+      //     ease: "power2.inOut",
+      //   });
+    }
+  }, []);
+
   return (
-    <section className="py-10">
+    <section className="py-10" ref={containerRef}>
       <div className="">
         <hr className="w-11/12 m-auto border-primary400 border-1" />
         <div className="flex gap-8 items-center justify-center my-12 max-lg:flex-wrap max-lg:justify-start max-lg:w-11/12 max-lg:mx-auto">

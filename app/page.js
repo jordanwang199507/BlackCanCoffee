@@ -17,7 +17,7 @@ export default function Home() {
         <Hero imageRef={imageRef} />
         <About imageRef={imageRef} />
         <Shop imageRef={imageRef} />
-        <Discovery />
+        <Discovery imageRef={imageRef} />
       </div>
     </main>
   );
