@@ -12,7 +12,7 @@ export default function Home() {
           ref={imageRef}
           src={"/images/bottle-image.png"}
           alt="Moving bottle"
-          className="z-10 absolute left-1/2 -translate-x-1/2  rotate-[20deg] max-md:scale-90 max-sm:scale-75 max-[450px]:scale-[65%] "
+          className="z-10 absolute left-1/2 -translate-x-1/2  rotate-[20deg]  "
         />
         <Hero imageRef={imageRef} />
         <About imageRef={imageRef} />

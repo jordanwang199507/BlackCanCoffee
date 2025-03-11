@@ -13,9 +13,6 @@ const Hero = ({ imageRef }) => {
     if (container && image) {
       const mm = gsap.matchMedia();
 
-      //finish laptop gsap first
-      //after check for larger screen
-      //after check each media size
       mm.add(
         {
           isDesktop: "(min-width: 1024px)",
@@ -62,6 +59,33 @@ const Hero = ({ imageRef }) => {
               zIndex: 0,
             }
           ).to("#title", { scale: 1.2, duration: 3 }, 0);
+
+          const facts = gsap.utils.toArray(".fact");
+          gsap.to(facts, {
+            y: 0,
+            opacity: 1,
+            duraation: 1,
+            ease: "power2.inOut",
+            stagger: {
+              each: 0.2,
+            },
+            scrollTrigger: {
+              trigger: "#description",
+              toggleActions: "restart reverse restart reverse",
+              start: "top 85%",
+            },
+          });
+
+          gsap.to("#description", {
+            y: 0,
+            opacity: 1,
+            ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: "#description",
+              toggleActions: "restart reverse restart reverse",
+              start: "top 85%",
+            },
+          });
           return () => {
             tl.kill();
           };
@@ -86,13 +110,13 @@ const Hero = ({ imageRef }) => {
         </div>
         <div className="flex justify-between items-start py-20  max-md:mt-20 max-md:flex-col max-md:items-center max-md:gap-10 z-10">
           <div className="max-w-[340px] text-lg font-outfitRegular text-pretty max-md:max-w-md max-[450px]:max-w-xs max-md:text-pretty max-md:text-center max-[450px]:text-base">
-            <p>
+            <p id="description" className="opacity-0 translate-y-20">
               Life’s too short for average coffee. Discover the perfect balance
               of boldness and smoothness.
             </p>
           </div>
           <ul className="flex flex-col gap-12 max-w-xs w-full max-lg:max-w-64 shrink-0 transition-all duration-75">
-            <li>
+            <li className="fact  opacity-0 translate-y-20">
               <h3 className="text-4xl font-outfitBlack tracking-wider max-[450px]:text-3xl">
                 100K
               </h3>
@@ -100,7 +124,7 @@ const Hero = ({ imageRef }) => {
                 Daily Energized Customers{" "}
               </p>
             </li>
-            <li>
+            <li className="fact  opacity-0 translate-y-20">
               <h3 className="text-4xl font-outfitBlack tracking-wider max-[450px]:text-3xl">
                 85%
               </h3>
@@ -108,7 +132,7 @@ const Hero = ({ imageRef }) => {
                 Customers’ “Go-To” Coffee{" "}
               </p>
             </li>
-            <li>
+            <li className="fact  opacity-0 translate-y-20">
               <h3 className="text-4xl font-outfitBlack tracking-wider max-[450px]:text-3xl">
                 100%
               </h3>

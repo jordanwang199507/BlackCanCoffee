@@ -2,6 +2,13 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import {
+  assetImage01,
+  assetImage02,
+  assetImage03,
+  assetImage04,
+  assetImage05,
+} from "../_utils";
 gsap.registerPlugin(ScrollTrigger);
 
 const About = ({ imageRef }) => {
@@ -42,6 +49,32 @@ const About = ({ imageRef }) => {
             ease: "power2.out",
             duration: 3,
           });
+
+          gsap.to(".image_grow", {
+            scale: 1,
+            opacity: 1,
+            duration: 1.5,
+            ease: "power1",
+            scrollTrigger: {
+              trigger: "#description",
+              toggleActions: "restart reverse restart reverse",
+              start: "top 75%",
+              scrub: 5.5,
+            },
+          });
+
+          gsap.to(".about_description", {
+            y: 0,
+            opacity: 1,
+            ease: "power2.inOut",
+            marker: true,
+            scrollTrigger: {
+              trigger: ".about_description",
+              toggleActions: "restart reverse restart reverse",
+              start: "top 95%",
+            },
+          });
+
           return () => {
             // ✅ Cleanup function when media query changes
             tl.kill();
@@ -74,10 +107,22 @@ const About = ({ imageRef }) => {
       <div className="flex justify-between max-[1180px]:flex-col max-[1180px]:gap-24 max-sm:gap-96 max-sm:items-center">
         <div className="max-w-[20rem] max-[1180px]:max-w-sm max-md:max-w-[20rem] flex flex-col gap-12 shrink-0 z-10">
           <div className="h-80 max-md:h-64 max-sm:h-44 flex gap-6">
-            <div className="w-1/2 h-full rounded-lg bg-assetImage01 bg-cover bg-center" />
-            <div className=" w-1/2 h-full rounded-lg bg-assetImage02 bg-cover bg-center" />
+            <div className="w-1/2 h-full rounded-lg overflow-hidden">
+              <img
+                src={assetImage01}
+                alt="About Section Image 01"
+                className="image_grow w-full h-full object-cover object-center scale-150 opacity-0"
+              />
+            </div>
+            <div className="w-1/2 h-full rounded-lg overflow-hidden">
+              <img
+                src={assetImage02}
+                alt="About Section Image 02"
+                className="image_grow w-full h-full object-cover object-center scale-150 opacity-0"
+              />
+            </div>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 opacity-0 translate-y-20 about_description ">
             <h3 className="text-4xl max-sm:text-3xl font-outfitBlack tracking-wider">
               Coffee That Keeps Up With You
             </h3>
@@ -88,20 +133,38 @@ const About = ({ imageRef }) => {
           </div>
         </div>
         <div className="max-w-[24rem] max-md:max-w-[20rem] shrink-0 flex flex-col gap-4 z-10">
-          <p className="text-lg max-sm:text-base font-outfitRegular leading-relaxed text-primary300 text-pretty">
+          <p className="text-lg max-sm:text-base font-outfitRegular leading-relaxed text-primary300 text-pretty about_description opacity-0 translate-y-20">
             Our iconic black cans are more than just packaging—they’re a
             statement of sophistication and simplicity.
           </p>
           <div className="flex flex-col gap-6 mt-2">
             <div className="h-36 flex gap-6">
-              <div className="w-1/2 h-full bg-assetImage03 bg-cover bg-center rounded-lg" />
-              <div className="w-1/2 h-full bg-assetImage04 bg-cover bg-center rounded-lg" />
+              <div className="w-1/2 h-full overflow-hidden rounded-lg">
+                <img
+                  src={assetImage03}
+                  alt="About Section Image 03"
+                  className="image_grow w-full h-full object-cover object-center scale-150 opacity-0"
+                />
+              </div>
+              <div className="w-1/2 h-full overflow-hidden rounded-lg">
+                <img
+                  src={assetImage04}
+                  alt="About Section Image 04"
+                  className="image_grow w-full h-full object-cover object-center scale-150 opacity-0"
+                />
+              </div>
             </div>
             <div className="h-36">
-              <div className="w-full h-full bg-assetImage05 bg-cover bg-top rounded-lg" />
+              <div className="w-full h-full overflow-hidden rounded-lg">
+                <img
+                  src={assetImage05}
+                  alt="About Section Image 05"
+                  className="image_grow w-full h-full object-cover object-center scale-150 opacity-0"
+                />
+              </div>
             </div>
           </div>
-          <p className="text-lg max-sm:text-base font-outfitRegular leading-relaxed text-pretty text-primary300 mt-4">
+          <p className="text-lg max-sm:text-base font-outfitRegular leading-relaxed text-pretty text-primary300 mt-4 about_description opacity-0 translate-y-20">
             At Black Brew Co.™, we take pride in sourcing the finest beans from
             sustainable farms across the globe. Each can you crack open
             represents our commitment to quality, flavor, and the planet.

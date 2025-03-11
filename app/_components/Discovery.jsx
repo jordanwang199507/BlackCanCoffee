@@ -18,7 +18,8 @@ const Discovery = ({ imageRef }) => {
       const mm = gsap.matchMedia();
       mm.add(
         {
-          isDesktop: "(min-width: 1280px)",
+          isLarge: "(min-width: 1513px)",
+          isDesktop: "(min-width: 1280px) and (max-width: 1512px)",
           isTablet: "(min-width: 1180px) and (max-width: 1279px)",
           isMobile: "(min-width: 1081px) and (max-width: 1179px)",
           isSmallMobile: "(min-width: 1025px) and (max-width: 1080px)",
@@ -28,6 +29,7 @@ const Discovery = ({ imageRef }) => {
         },
         (context) => {
           let {
+            isLarge,
             isDesktop,
             isTablet,
             isMobile,
@@ -40,15 +42,17 @@ const Discovery = ({ imageRef }) => {
               trigger: container,
               start: "-10% 90%",
               end: "50% 65%",
-              markers: true,
+              //   markers: true,
               scrub: true,
               anticipatePin: 1,
               toggleActions: "play none reverse none",
             },
           });
           tl.to(image, {
-            y: isDesktop
+            y: isLarge
               ? "316vh"
+              : isDesktop
+              ? "424vh"
               : isTablet
               ? "424vh"
               : isMobile
@@ -60,8 +64,10 @@ const Discovery = ({ imageRef }) => {
               : isPhone
               ? "547vh"
               : "582vh",
-            x: isDesktop
+            x: isLarge
               ? "32vmin"
+              : isDesktop
+              ? "25vmin"
               : isTablet
               ? "25vw"
               : isMobile
@@ -76,6 +82,23 @@ const Discovery = ({ imageRef }) => {
             ease: "power2.inOut",
             zIndex: 2,
           });
+
+          gsap.to(".discovery_description", {
+            y: 0,
+            opacity: 1,
+            ease: "power2.inOut",
+            marker: true,
+            scrollTrigger: {
+              trigger: ".discovery_description",
+              toggleActions: "restart reverse restart reverse",
+              start: "top 90%",
+            },
+          });
+
+          return () => {
+            // ✅ Cleanup function when media query changes
+            tl.kill();
+          };
         }
       );
       //   let tl = gsap.timeline({
@@ -116,7 +139,7 @@ const Discovery = ({ imageRef }) => {
           </p>
         </div>
         <div className="w-full py-6 px-24 max-md:pb-20 max-sm:pb-32 max-md:px-12 bg-primary400 rounded-xl relative overflow-hidden mt-32 mb-24">
-          <div className="flex flex-col my-10 max-w-md z-10 relative">
+          <div className="flex flex-col my-10 max-w-md z-10 relative discovery_description opacity-0 translate-y-20 ">
             <p className="text-white100 text-sm font-outfitRegular">
               (Winter Promotion)
             </p>

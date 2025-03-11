@@ -19,7 +19,8 @@ const Shop = ({ imageRef }) => {
 
       mm.add(
         {
-          isDesktop: "(min-width: 1280px)",
+          isLarge: "(min-width: 1513px)",
+          isDesktop: "(min-width: 1280px) and (max-width: 1512px)",
           isTablet: "(min-width: 1180px) and (max-width: 1279px)",
           isMobile: "(min-width: 1081px) and (max-width: 1179px)",
           isSmallMobile: "(min-width: 1025px) and (max-width: 1080px)",
@@ -29,6 +30,7 @@ const Shop = ({ imageRef }) => {
         },
         (context) => {
           let {
+            isLarge,
             isDesktop,
             isTablet,
             isMobile,
@@ -42,14 +44,16 @@ const Shop = ({ imageRef }) => {
               start: "-50% 90%",
               end: "50% 65%",
               scrub: true,
-              markers: true,
+              //   markers: true,
               anticipatePin: 1,
               toggleActions: "play none reverse none",
             },
           });
           tl.to(image, {
-            y: isDesktop
+            y: isLarge
               ? "230vh"
+              : isDesktop
+              ? "290vh"
               : isTablet
               ? "290vh"
               : isMobile
@@ -61,8 +65,10 @@ const Shop = ({ imageRef }) => {
               : isPhone
               ? "376vh"
               : "386vh",
-            x: isDesktop
+            x: isLarge
               ? "-33vmin"
+              : isDesktop
+              ? "-50vmin"
               : isTablet
               ? "-39vmin"
               : isMobile
@@ -79,8 +85,26 @@ const Shop = ({ imageRef }) => {
             duration: 2,
             ease: "power2.inOut",
           });
+
+          gsap.to(".shop_description", {
+            y: 0,
+            opacity: 1,
+            ease: "power2.inOut",
+            marker: true,
+            scrollTrigger: {
+              trigger: ".shop_description",
+              toggleActions: "restart reverse restart reverse",
+              start: "top 90%",
+            },
+          });
+
+          return () => {
+            // ✅ Cleanup function when media query changes
+            tl.kill();
+          };
         }
       );
+
       //   let tl = gsap.timeline({
       //     scrollTrigger: {
       //       trigger: container,
@@ -104,7 +128,7 @@ const Shop = ({ imageRef }) => {
   });
 
   return (
-    <section className="py-10" ref={containerRef}>
+    <section className="py-10 " ref={containerRef}>
       <div className="flex justify-between gap-10 max-[1080px]:justify-end max-[1080px]:gap-0">
         {/* <div className="w-full flex-grow "> */}
         <Image
@@ -116,7 +140,7 @@ const Shop = ({ imageRef }) => {
         />
         {/* </div> */}
         <div className="w-2/3 max-md:min-w-min flex flex-col gap-12 min-w-[30rem] max-w-[50rem] relative">
-          <div className="max-w-lg flex flex-col gap-6 ml-auto">
+          <div className="max-w-lg flex flex-col gap-6 ml-auto opacity-0 translate-y-20 shop_description">
             <h4 className="text-3xl font-outfitBold tracking-wide max-w-md max-sm:text-2xl">
               Taste Profile: Bold, Smooth, and Perfectly Balanced
             </h4>
