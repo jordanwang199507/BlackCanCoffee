@@ -24,7 +24,7 @@ const Hero = ({ imageRef }) => {
   }, []);
   useEffect(() => {
     if (windowHeight === 0) return;
-
+    setTimeout(() => {}, 100);
     const container = containerRef.current;
     const image = imageRef.current;
 
@@ -59,9 +59,7 @@ const Hero = ({ imageRef }) => {
               toggleActions: "play none reverse none",
             },
           });
-          setTimeout(() => {
-            // Now GSAP reads correct position after Tailwind styles apply
-          }, 100);
+
           tl.fromTo(
             image,
             {
