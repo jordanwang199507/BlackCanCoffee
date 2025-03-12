@@ -60,17 +60,17 @@ const Hero = ({ imageRef }) => {
             },
           });
 
-          tl.fromTo(
+          tl.to(
             image,
-            {
-              x:
-                image.getBoundingClientRect().left +
-                image.offsetWidth / 1 -
-                window.innerWidth / 2,
-              y: startY,
-              scale: isDesktop ? 1 : isTablet ? 0.9 : 0.65,
-              zIndex: 1,
-            },
+            // {
+            //   x:
+            //     image.getBoundingClientRect().left +
+            //     image.offsetWidth / 1 -
+            //     window.innerWidth / 2,
+            //   y: startY,
+            //   scale: isDesktop ? 1 : isTablet ? 0.9 : 0.65,
+            //   zIndex: 1,
+            // },
             {
               y: endY,
               x: isMobile ? "-35vmin" : "", // Mobile adjusts X, others remain
