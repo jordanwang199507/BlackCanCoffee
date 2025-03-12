@@ -14,7 +14,7 @@ const Nav = () => {
           height={44}
           alt="company logo"
         />
-        <ul className="px-4 py-1 bg-[#ffffff33] rounded-lg flex text-lg gap-6 items-center max-lg:hidden">
+        <ul className="px-4 py-1 bg-[#ffffff33] rounded-lg flex text-lg gap-6 items-center max-lg:hidden backdrop-blur-lg">
           <li className="cursor-pointer font-outfitExtraLight px-3.5 py-1.5 rounded-md active hover:bg-primary200 hover:text-dark hover:font-outfitLight">
             Home
           </li>

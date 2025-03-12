@@ -1,12 +1,29 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger);
 const Hero = ({ imageRef }) => {
   const containerRef = useRef(null);
+  const [windowHeight, setWindowHeight] = useState(0);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowHeight(window.innerHeight);
+
+      const handleResize = () => {
+        setWindowHeight(window.innerHeight);
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
+  useEffect(() => {
+    if (windowHeight === 0) return;
     const container = containerRef.current;
     const image = imageRef.current;
 
@@ -92,7 +109,7 @@ const Hero = ({ imageRef }) => {
         }
       );
     }
-  }, []);
+  }, [windowHeight]);
 
   return (
     <section

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import {
@@ -13,8 +13,25 @@ gsap.registerPlugin(ScrollTrigger);
 
 const About = ({ imageRef }) => {
   const containerRef = useRef(null);
+  const [windowHeight, setWindowHeight] = useState(0);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowHeight(window.innerHeight);
+
+      const handleResize = () => {
+        setWindowHeight(window.innerHeight);
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
+  useEffect(() => {
+    if (windowHeight === 0) return;
     const container = containerRef.current;
     const image = imageRef.current;
 
@@ -76,31 +93,12 @@ const About = ({ imageRef }) => {
           });
 
           return () => {
-            // ✅ Cleanup function when media query changes
             tl.kill();
           };
         }
       );
-
-      //   let tl = gsap.timeline({
-      //     scrollTrigger: {
-      //       trigger: container,
-      //       start: "top 80%",
-      //       end: "50% 50%",
-      //       //   markers: true,
-      //       scrub: true,
-      //       //   pin: true,
-      //       anticipatePin: 1,
-      //       toggleActions: "play none reverse none",
-      //     },
-      //   });
-      //   tl.to(
-      //     image,
-      //     // { y: "80vh", rotate: 0, scale: 2 },
-      //     { y: "125vh", rotate: 0, scale: 1, duration: 2, ease: "power2.out" }
-      //   );
     }
-  });
+  }, [windowHeight]);
 
   return (
     <section ref={containerRef} className="min-h-fit mt-60">

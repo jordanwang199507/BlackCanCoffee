@@ -2,7 +2,7 @@
 import Heart from "@/public/icons/Heart";
 import ShoppingCart from "@/public/icons/ShoppingCart";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
@@ -10,7 +10,26 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Shop = ({ imageRef }) => {
   const containerRef = useRef(null);
+  const [windowHeight, setWindowHeight] = useState(0);
+
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowHeight(window.innerHeight);
+
+      const handleResize = () => {
+        setWindowHeight(window.innerHeight);
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
+  useEffect(() => {
+    if (windowHeight === 0) return;
+
     const container = containerRef.current;
     const image = imageRef.current;
 
@@ -99,33 +118,12 @@ const Shop = ({ imageRef }) => {
           });
 
           return () => {
-            // ✅ Cleanup function when media query changes
             tl.kill();
           };
         }
       );
-
-      //   let tl = gsap.timeline({
-      //     scrollTrigger: {
-      //       trigger: container,
-      //       start: "-50% 90%",
-      //       end: "50% 65%",
-      //       scrub: true,
-      //       markers: true,
-      //       anticipatePin: 1,
-      //       toggleActions: "play none reverse none",
-      //     },
-      //   });
-      //   tl.to(image, {
-      //     y: "208vh",
-      //     x: "-33vmin",
-      //     scale: 0.52,
-      //     rotate: 88,
-      //     duration: 2,
-      //     ease: "power2.inOut",
-      //   });
     }
-  });
+  }, [windowHeight]);
 
   return (
     <section className="py-10 " ref={containerRef}>
