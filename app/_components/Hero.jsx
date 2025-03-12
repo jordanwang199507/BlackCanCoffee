@@ -24,6 +24,7 @@ const Hero = ({ imageRef }) => {
   }, []);
   useEffect(() => {
     if (windowHeight === 0) return;
+
     const container = containerRef.current;
     const image = imageRef.current;
 
@@ -58,26 +59,30 @@ const Hero = ({ imageRef }) => {
               toggleActions: "play none reverse none",
             },
           });
-
+          setTimeout(() => {
+            // Now GSAP reads correct position after Tailwind styles apply
+          }, 100);
           tl.fromTo(
             image,
             {
+              x:
+                image.getBoundingClientRect().left +
+                image.offsetWidth / 1 -
+                window.innerWidth / 2,
               y: startY,
-              x: gsap.getProperty(image, "x"),
               scale: isDesktop ? 1 : isTablet ? 0.9 : 0.65,
               zIndex: 1,
             },
             {
               y: endY,
-              x: isMobile ? "-35vmin" : gsap.getProperty(image, "x"),
+              x: isMobile ? "-35vmin" : "", // Mobile adjusts X, others remain
               rotate: 0,
               scale: isDesktop ? 1.5 : isTablet ? 1.2 : 1.2,
               ease: "power2.out",
               duration: 3,
               zIndex: 0,
             }
-          ).to("#title", { scale: 1.2, duration: 3 }, 0);
-
+          );
           const facts = gsap.utils.toArray(".fact");
           gsap.to(facts, {
             y: 0,
