@@ -62,8 +62,6 @@ const Hero = ({ imageRef }) => {
           tl.fromTo(
             image,
             {
-              y: startY,
-              x: 0,
               scale: isDesktop ? 1 : isTablet ? 0.9 : 0.65,
               zIndex: 1,
             },
