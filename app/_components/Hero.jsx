@@ -62,12 +62,14 @@ const Hero = ({ imageRef }) => {
           tl.fromTo(
             image,
             {
+              y: startY,
+              x: gsap.getProperty(image, "x"),
               scale: isDesktop ? 1 : isTablet ? 0.9 : 0.65,
               zIndex: 1,
             },
             {
               y: endY,
-              x: isMobile ? "-35vmin" : "",
+              x: isMobile ? "-35vmin" : gsap.getProperty(image, "x"),
               rotate: 0,
               scale: isDesktop ? 1.5 : isTablet ? 1.2 : 1.2,
               ease: "power2.out",
