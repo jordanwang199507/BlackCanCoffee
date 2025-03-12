@@ -42,6 +42,10 @@ const outfit900 = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/icons/logo.svg" sizes="any" />
+        <title>Black Can Coffee</title>
+      </head>
       <body
         className={`${outfit100.variable} ${outfit200.variable} ${outfit300.variable} ${outfit400.variable} ${outfit500.variable} ${outfit600.variable} ${outfit700.variable} ${outfit800.variable} ${outfit900.variable}`}
       >
